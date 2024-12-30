@@ -3,12 +3,14 @@ package com.mstrsi.pers_management.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 
 import java.time.LocalDate;
 
-@Data
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -34,4 +36,60 @@ public class DecisionRecrutement {
 
     @Enumerated(EnumType.STRING)
     private Visa visa;
+
+    public long getDecision_id() {
+        return decision_id;
+    }
+
+    public void setDecision_id(long decision_id) {
+        this.decision_id = decision_id;
+    }
+
+    public String getDecision_numero() {
+        return decision_numero;
+    }
+
+    public void setDecision_numero(String decision_numero) {
+        this.decision_numero = decision_numero;
+    }
+
+    public LocalDate getDecision_date() {
+        return decision_date;
+    }
+
+    public void setDecision_date(LocalDate decision_date) {
+        this.decision_date = decision_date;
+    }
+
+    public LocalDate getDate_effet_previsionnelle() {
+        return date_effet_previsionnelle;
+    }
+
+    public void setDate_effet_previsionnelle(LocalDate date_effet_previsionnelle) {
+        this.date_effet_previsionnelle = date_effet_previsionnelle;
+    }
+
+    public Poste getPoste() {
+        return poste;
+    }
+
+    public void setPoste(Poste poste) {
+        this.poste = poste;
+    }
+
+    public Agent getAgent() {
+        return agent;
+    }
+
+    public void setAgent(Agent agent) {
+        this.agent = agent;
+    }
+
+    public Visa getVisa() {
+        return visa;
+    }
+
+    public void setVisa(Visa visa) {
+        this.visa = visa;
+    }
 }

@@ -21,4 +21,8 @@ public class Qualification {
     private LocalDate qualification_date;
     private String qualification_type;
 
+    @ManyToOne
+    @JoinColumn(name = "agent_id")
+    private Agent agent;
+
 }

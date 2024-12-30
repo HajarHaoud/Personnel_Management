@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
-@Data
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -27,4 +27,44 @@ public class Grade {
     @JoinColumn(name = "poste_id")
     private Poste poste;
 
+
+    public long getGrade_id() {
+        return grade_id;
+    }
+
+    public void setGrade_id(long grade_id) {
+        this.grade_id = grade_id;
+    }
+
+    public String getGrade_name() {
+        return grade_name;
+    }
+
+    public void setGrade_name(String grade_name) {
+        this.grade_name = grade_name;
+    }
+
+    public String getGrade_description() {
+        return grade_description;
+    }
+
+    public void setGrade_description(String grade_description) {
+        this.grade_description = grade_description;
+    }
+
+    public LocalDate getGrade_date() {
+        return grade_date;
+    }
+
+    public void setGrade_date(LocalDate grade_date) {
+        this.grade_date = grade_date;
+    }
+
+    public Poste getPoste() {
+        return poste;
+    }
+
+    public void setPoste(Poste poste) {
+        this.poste = poste;
+    }
 }
