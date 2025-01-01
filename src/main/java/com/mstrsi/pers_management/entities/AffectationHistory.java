@@ -13,11 +13,11 @@ import java.time.LocalDate;
 public class AffectationHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long affectation_history_id;
+    private long affectationHistoryId;
 
-    private String affectation_history_name;
-    private LocalDate affectation_history_start_date;
-    private LocalDate affectation_history_end_date;
+    private String affectationHistoryName;
+    private LocalDate affectationHistoryStartDate;
+    private LocalDate affectationHistoryEndDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "agent_id", nullable = false)
@@ -28,36 +28,36 @@ public class AffectationHistory {
     private Affectation affectation;
 
 
-    public long getAffectation_history_id() {
-        return affectation_history_id;
+    public long getAffectationHistoryId() {
+        return affectationHistoryId;
     }
 
-    public void setAffectation_history_id(long affectation_history_id) {
-        this.affectation_history_id = affectation_history_id;
+    public void setAffectationHistoryId(long affectationHistoryId) {
+        this.affectationHistoryId = affectationHistoryId;
     }
 
-    public String getAffectation_history_name() {
-        return affectation_history_name;
+    public String getAffectationHistoryName() {
+        return affectationHistoryName;
     }
 
-    public void setAffectation_history_name(String affectation_history_name) {
-        this.affectation_history_name = affectation_history_name;
+    public void setAffectationHistoryName(String affectationHistoryName) {
+        this.affectationHistoryName = affectationHistoryName;
     }
 
-    public LocalDate getAffectation_history_start_date() {
-        return affectation_history_start_date;
+    public LocalDate getAffectationHistoryStartDate() {
+        return affectationHistoryStartDate;
     }
 
-    public void setAffectation_history_start_date(LocalDate affectation_history_start_date) {
-        this.affectation_history_start_date = affectation_history_start_date;
+    public void setAffectationHistoryStartDate(LocalDate affectationHistoryStartDate) {
+        this.affectationHistoryStartDate = affectationHistoryStartDate;
     }
 
-    public LocalDate getAffectation_history_end_date() {
-        return affectation_history_end_date;
+    public LocalDate getAffectationHistoryEndDate() {
+        return affectationHistoryEndDate;
     }
 
-    public void setAffectation_history_end_date(LocalDate affectation_history_end_date) {
-        this.affectation_history_end_date = affectation_history_end_date;
+    public void setAffectationHistoryEndDate(LocalDate affectationHistoryEndDate) {
+        this.affectationHistoryEndDate = affectationHistoryEndDate;
     }
 
     public Agent getAgent() {

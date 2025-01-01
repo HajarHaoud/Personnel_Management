@@ -16,12 +16,12 @@ import java.time.LocalDate;
 public class EmployeAR {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long employe_id;
+    private long employeId;
     private String nom;
     private String prenom;
     private String adresse;
     private String telephone;
     private String email;
-    private LocalDate date_debut;
-    private LocalDate date_fin;
+    private LocalDate dateDebut;
+    private LocalDate dateFin;
 }

@@ -22,7 +22,7 @@ public class PosteService {
     public void assignerGradeAuPoste(Long posteId , Grade grade) {
         Poste poste = posteRepository.findById(posteId)
                 .orElseThrow(() -> new RuntimeException("Poste non trouve"));
-        poste.getGrade_requested().add(grade);
+        poste.getGradeRequested().add(grade);
         posteRepository.save(poste);
     }
 }

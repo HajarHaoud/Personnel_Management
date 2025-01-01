@@ -15,14 +15,14 @@ import java.util.List;
 public class UniteAffectation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long unite_affectation_code;
-    private String unite_affectation_name;
-    private String unite_affectation_description;
-    private String unite_affectation_type;
+    private long uniteAffectationCode;
+    private String uniteAffectationName;
+    private String uniteAffectationDescription;
+    private String uniteAffectationType;
 
     @OneToMany(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
-    private List<Agent> responsable_unite_affectation;
+    private List<Agent> responsableUniteAffectation;
 
     @OneToMany(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
-    private List<Poste> postes_affectation;
+    private List<Poste> postesAffectation;
 }

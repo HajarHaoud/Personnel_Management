@@ -16,65 +16,65 @@ import java.time.LocalDate;
 public class GradeHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long grade_history_id;
+    private long gradeHistoryId;
 
-    private LocalDate grade_history_date;
-    private String grade_history_description;
-    private String grade_history_name;
-    private LocalDate grade_history_end_date;
-    private LocalDate grade_history_start_date;
+    private LocalDate gradeHistoryDate;
+    private String gradeHistoryDescription;
+    private String gradeHistoryName;
+    private LocalDate gradeHistoryEndDate;
+    private LocalDate gradeHistoryStartDate;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "agent_id")
     private Agent agent;
 
 
-    public long getGrade_history_id() {
-        return grade_history_id;
+    public long getGradeHistoryId() {
+        return gradeHistoryId;
     }
 
-    public void setGrade_history_id(long grade_history_id) {
-        this.grade_history_id = grade_history_id;
+    public void setGradeHistoryId(long gradeHistoryId) {
+        this.gradeHistoryId = gradeHistoryId;
     }
 
-    public LocalDate getGrade_history_date() {
-        return grade_history_date;
+    public LocalDate getGradeHistoryDate() {
+        return gradeHistoryDate;
     }
 
-    public void setGrade_history_date(LocalDate grade_history_date) {
-        this.grade_history_date = grade_history_date;
+    public void setGradeHistoryDate(LocalDate gradeHistoryDate) {
+        this.gradeHistoryDate = gradeHistoryDate;
     }
 
-    public String getGrade_history_description() {
-        return grade_history_description;
+    public String getGradeHistoryDescription() {
+        return gradeHistoryDescription;
     }
 
-    public void setGrade_history_description(String grade_history_description) {
-        this.grade_history_description = grade_history_description;
+    public void setGradeHistoryDescription(String gradeHistoryDescription) {
+        this.gradeHistoryDescription = gradeHistoryDescription;
     }
 
-    public String getGrade_history_name() {
-        return grade_history_name;
+    public String getGradeHistoryName() {
+        return gradeHistoryName;
     }
 
-    public void setGrade_history_name(String grade_history_name) {
-        this.grade_history_name = grade_history_name;
+    public void setGradeHistoryName(String gradeHistoryName) {
+        this.gradeHistoryName = gradeHistoryName;
     }
 
-    public LocalDate getGrade_history_end_date() {
-        return grade_history_end_date;
+    public LocalDate getGradeHistoryEndDate() {
+        return gradeHistoryEndDate;
     }
 
-    public void setGrade_history_end_date(LocalDate grade_history_end_date) {
-        this.grade_history_end_date = grade_history_end_date;
+    public void setGradeHistoryEndDate(LocalDate gradeHistoryEndDate) {
+        this.gradeHistoryEndDate = gradeHistoryEndDate;
     }
 
-    public LocalDate getGrade_history_start_date() {
-        return grade_history_start_date;
+    public LocalDate getGradeHistoryStartDate() {
+        return gradeHistoryStartDate;
     }
 
-    public void setGrade_history_start_date(LocalDate grade_history_start_date) {
-        this.grade_history_start_date = grade_history_start_date;
+    public void setGradeHistoryStartDate(LocalDate gradeHistoryStartDate) {
+        this.gradeHistoryStartDate = gradeHistoryStartDate;
     }
 
     public Agent getAgent() {

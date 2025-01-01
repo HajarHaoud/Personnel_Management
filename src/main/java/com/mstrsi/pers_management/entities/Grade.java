@@ -16,10 +16,10 @@ public class Grade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "grade_id")
-    private long grade_id;
-    private String grade_name;
-    private String grade_description;
-    private LocalDate grade_date;
+    private long gradeId;
+    private String gradeName;
+    private String gradeDescription;
+    private LocalDate gradeDate;
 
 
 
@@ -27,44 +27,35 @@ public class Grade {
     @JoinColumn(name = "poste_id")
     private Poste poste;
 
-
-    public long getGrade_id() {
-        return grade_id;
+    public long getGradeId() {
+        return gradeId;
     }
 
-    public void setGrade_id(long grade_id) {
-        this.grade_id = grade_id;
+    public void setGradeId(long gradeId) {
+        this.gradeId = gradeId;
     }
 
-    public String getGrade_name() {
-        return grade_name;
+    public String getGradeName() {
+        return gradeName;
     }
 
-    public void setGrade_name(String grade_name) {
-        this.grade_name = grade_name;
+    public void setGradeName(String gradeName) {
+        this.gradeName = gradeName;
     }
 
-    public String getGrade_description() {
-        return grade_description;
+    public String getGradeDescription() {
+        return gradeDescription;
     }
 
-    public void setGrade_description(String grade_description) {
-        this.grade_description = grade_description;
+    public void setGradeDescription(String gradeDescription) {
+        this.gradeDescription = gradeDescription;
     }
 
-    public LocalDate getGrade_date() {
-        return grade_date;
+    public LocalDate getGradeDate() {
+        return gradeDate;
     }
 
-    public void setGrade_date(LocalDate grade_date) {
-        this.grade_date = grade_date;
-    }
-
-    public Poste getPoste() {
-        return poste;
-    }
-
-    public void setPoste(Poste poste) {
-        this.poste = poste;
+    public void setGradeDate(LocalDate gradeDate) {
+        this.gradeDate = gradeDate;
     }
 }

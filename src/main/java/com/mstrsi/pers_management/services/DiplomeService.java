@@ -17,13 +17,24 @@ public class DiplomeService {
     @Autowired
     private AgentService agentService ;
 
+
+
+
     public Diplome ajouterDiplome(Long agentId , Diplome diplome){
-        Agent agent = agentService.getAgentById(agentId) ;
+        Agent agent = agentService.getAgent(agentId) ;
         diplome.setAgent(agent);
         return diplomeRespository.save(diplome);
     }
 
     public List<Diplome> getDiplomeByAgent(Agent agentId){
         return diplomeRespository.findByAgent(agentId);
+    }
+
+    public void deleteDiplome(Diplome diplome){
+        diplomeRespository.delete(diplome);
+    }
+
+    public void saveDiplome(Diplome diplome){
+        diplomeRespository.save(diplome);
     }
 }

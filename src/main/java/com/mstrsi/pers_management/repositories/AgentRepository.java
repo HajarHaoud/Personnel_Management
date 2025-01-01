@@ -13,8 +13,7 @@ import java.util.Optional;
 
 @Repository
 public interface AgentRepository extends JpaRepository<Agent, Long> {
-    @Query("SELECT a FROM Agent a WHERE a.decision.decision_date BETWEEN ?1 AND ?2")
-    List<Agent> findByDecision_Decision_dateBetween(LocalDate startDate, LocalDate endDate);
-
-
+    @Query("SELECT a FROM Agent a WHERE a.decision.decisionDate BETWEEN ?1 AND ?2")
+    List<Agent> findByDecisionDecisionDateBetween(LocalDate startDate, LocalDate endDate);
+    Agent getAgentById(long id);
 }

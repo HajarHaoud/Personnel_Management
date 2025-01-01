@@ -17,11 +17,11 @@ import java.util.List;
 public class Affectation {
     @Id
     @GeneratedValue
-    private long affectation_id;
+    private long affectationId;
 
-    private String affectation_name;
-    private LocalDate affectation_date;
-    private LocalDate end_date;
+    private String affectationName;
+    private LocalDate affectationDate;
+    private LocalDate endDate;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "agent_id")
@@ -31,36 +31,36 @@ public class Affectation {
     private List<AffectationHistory> affectationHistories;
 
 
-    public long getAffectation_id() {
-        return affectation_id;
+    public long getAffectationId() {
+        return affectationId;
     }
 
-    public void setAffectation_id(long affectation_id) {
-        this.affectation_id = affectation_id;
+    public void setAffectationId(long affectationId) {
+        this.affectationId = affectationId;
     }
 
-    public String getAffectation_name() {
-        return affectation_name;
+    public String getAffectationName() {
+        return affectationName;
     }
 
-    public void setAffectation_name(String affectation_name) {
-        this.affectation_name = affectation_name;
+    public void setAffectationName(String affectationName) {
+        this.affectationName = affectationName;
     }
 
-    public LocalDate getAffectation_date() {
-        return affectation_date;
+    public LocalDate getAffectationDate() {
+        return affectationDate;
     }
 
-    public void setAffectation_date(LocalDate affectation_date) {
-        this.affectation_date = affectation_date;
+    public void setAffectationDate(LocalDate affectationDate) {
+        this.affectationDate = affectationDate;
     }
 
-    public LocalDate getEnd_date() {
-        return end_date;
+    public LocalDate getEndDate() {
+        return endDate;
     }
 
-    public void setEnd_date(LocalDate end_date) {
-        this.end_date = end_date;
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
     }
 
     public Agent getAgent() {

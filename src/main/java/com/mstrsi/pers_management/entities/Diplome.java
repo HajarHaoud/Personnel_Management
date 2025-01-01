@@ -15,9 +15,9 @@ import java.time.LocalDate;
 public class Diplome {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long diplome_id;
-    private String diplome_name;
-    private LocalDate diplome_date;
+    private long diplomeId;
+    private String diplomeName;
+    private LocalDate diplomeDate;
 
     @ManyToOne
     @JoinColumn(name = "agent_id")
@@ -32,27 +32,27 @@ public class Diplome {
         this.agent = agent;
     }
 
-    public LocalDate getDiplome_date() {
-        return diplome_date;
+    public long getDiplomeId() {
+        return diplomeId;
     }
 
-    public void setDiplome_date(LocalDate diplome_date) {
-        this.diplome_date = diplome_date;
+    public void setDiplomeId(long diplomeId) {
+        this.diplomeId = diplomeId;
     }
 
-    public String getDiplome_name() {
-        return diplome_name;
+    public String getDiplomeName() {
+        return diplomeName;
     }
 
-    public void setDiplome_name(String diplome_name) {
-        this.diplome_name = diplome_name;
+    public void setDiplomeName(String diplomeName) {
+        this.diplomeName = diplomeName;
     }
 
-    public long getDiplome_id() {
-        return diplome_id;
+    public LocalDate getDiplomeDate() {
+        return diplomeDate;
     }
 
-    public void setDiplome_id(long diplome_id) {
-        this.diplome_id = diplome_id;
+    public void setDiplomeDate(LocalDate diplomeDate) {
+        this.diplomeDate = diplomeDate;
     }
 }

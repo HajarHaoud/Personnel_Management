@@ -16,7 +16,7 @@ import java.time.LocalDate;
 public class AvisPriseFonction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long afp_id;
+    private Long afpId;
 
     @OneToOne
     @JoinColumn(name = "agent_id")
@@ -25,18 +25,18 @@ public class AvisPriseFonction {
     @ManyToOne
     @JoinColumn(name = "unite_affectation_id")
     private UniteAffectation uniteAffectation;
-    private LocalDate afp_date;
+    private LocalDate afpDate;
 
     @Column(name = "responsable_name")
-    private String afp_responsable_name;
+    private String afpResponsableName;
 
 
-    public Long getAfp_id() {
-        return afp_id;
+    public Long getAfpId() {
+        return afpId;
     }
 
-    public void setAfp_id(Long afp_id) {
-        this.afp_id = afp_id;
+    public void setAfpId(Long afpId) {
+        this.afpId = afpId;
     }
 
     public Agent getAgent() {
@@ -55,19 +55,19 @@ public class AvisPriseFonction {
         this.uniteAffectation = uniteAffectation;
     }
 
-    public LocalDate getAfp_date() {
-        return afp_date;
+    public LocalDate getAfpDate() {
+        return afpDate;
     }
 
-    public void setAfp_date(LocalDate afp_date) {
-        this.afp_date = afp_date;
+    public void setAfpDate(LocalDate afpDate) {
+        this.afpDate = afpDate;
     }
 
-    public String getAfp_responsable_name() {
-        return afp_responsable_name;
+    public String getAfpResponsableName() {
+        return afpResponsableName;
     }
 
-    public void setAfp_responsable_name(String afp_responsable_name) {
-        this.afp_responsable_name = afp_responsable_name;
+    public void setAfpResponsableName(String afpResponsableName) {
+        this.afpResponsableName = afpResponsableName;
     }
 }

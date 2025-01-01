@@ -15,8 +15,8 @@ import java.time.LocalDate;
 public class Rapport {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long rapport_id;
-    private String rapport_description;
-    private String rapport_type;
-    private LocalDate rapport_date;
+    private long rapportId;
+    private String rapportDescription;
+    private String rapportType;
+    private LocalDate rapportDate;
 }

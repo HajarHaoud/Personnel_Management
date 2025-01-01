@@ -14,6 +14,6 @@ import lombok.NoArgsConstructor;
 public class SCF {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long scf_id;
-    private String scf_name;
+    private long scfId;
+    private String scfName;
 }

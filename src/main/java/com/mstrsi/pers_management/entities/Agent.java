@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -44,8 +45,10 @@ public class Agent {
     @OneToMany(mappedBy = "agent", fetch = FetchType.LAZY , cascade = CascadeType.ALL)
     private List<Diplome> diplomes;
 
-    @OneToMany(mappedBy = "agent", fetch = FetchType.LAZY , cascade = CascadeType.ALL)
-    private List<Conge> conges;
+
+
+    @OneToMany(mappedBy = "agent", fetch = FetchType.EAGER , cascade = CascadeType.ALL)
+    private List<Conge> conges = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "poste_id")

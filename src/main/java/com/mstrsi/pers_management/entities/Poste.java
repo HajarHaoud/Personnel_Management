@@ -10,63 +10,63 @@ import lombok.Data;
 public class Poste {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long poste_id;
-    private String poste_name;
-    private String poste_description;
-    private int poste_salary;
+    private long posteId;
+    private String posteName;
+    private String posteDescription;
+    private int posteSalary;
 
     @OneToMany(mappedBy = "poste", fetch = FetchType.LAZY , cascade = CascadeType.ALL)
-    private List<Grade> grade_requested;
+    private List<Grade> gradeRequested;
 
     @OneToMany(mappedBy = "poste", fetch = FetchType.LAZY)
-    private List<Agent> agents_assigned;
+    private List<Agent> agentsAssigned;
 
 
-    public long getPoste_id() {
-        return poste_id;
+    public long getPosteId() {
+        return posteId;
     }
 
-    public void setPoste_id(long poste_id) {
-        this.poste_id = poste_id;
+    public void setPosteId(long posteId) {
+        this.posteId = posteId;
     }
 
-    public String getPoste_name() {
-        return poste_name;
+    public String getPosteName() {
+        return posteName;
     }
 
-    public void setPoste_name(String poste_name) {
-        this.poste_name = poste_name;
+    public void setPosteName(String posteName) {
+        this.posteName = posteName;
     }
 
-    public String getPoste_description() {
-        return poste_description;
+    public String getPosteDescription() {
+        return posteDescription;
     }
 
-    public void setPoste_description(String poste_description) {
-        this.poste_description = poste_description;
+    public void setPosteDescription(String posteDescription) {
+        this.posteDescription = posteDescription;
     }
 
-    public int getPoste_salary() {
-        return poste_salary;
+    public int getPosteSalary() {
+        return posteSalary;
     }
 
-    public void setPoste_salary(int poste_salary) {
-        this.poste_salary = poste_salary;
+    public void setPosteSalary(int posteSalary) {
+        this.posteSalary = posteSalary;
     }
 
-    public List<Grade> getGrade_requested() {
-        return grade_requested;
+    public List<Grade> getGradeRequested() {
+        return gradeRequested;
     }
 
-    public void setGrade_requested(List<Grade> grade_requested) {
-        this.grade_requested = grade_requested;
+    public void setGradeRequested(List<Grade> gradeRequested) {
+        this.gradeRequested = gradeRequested;
     }
 
-    public List<Agent> getAgents_assigned() {
-        return agents_assigned;
+    public List<Agent> getAgentsAssigned() {
+        return agentsAssigned;
     }
 
-    public void setAgents_assigned(List<Agent> agents_assigned) {
-        this.agents_assigned = agents_assigned;
+    public void setAgentsAssigned(List<Agent> agentsAssigned) {
+        this.agentsAssigned = agentsAssigned;
     }
 }

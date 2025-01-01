@@ -15,11 +15,11 @@ import java.time.LocalDate;
 public class Qualification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long qualification_id;
-    private String qualification_name;
-    private String qualification_description;
-    private LocalDate qualification_date;
-    private String qualification_type;
+    private long qualificationId;
+    private String qualificationName;
+    private String qualificationDescription;
+    private LocalDate qualificationDate;
+    private String qualificationType;
 
     @ManyToOne
     @JoinColumn(name = "agent_id")

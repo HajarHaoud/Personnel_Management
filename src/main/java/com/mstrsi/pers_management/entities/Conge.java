@@ -17,64 +17,72 @@ import java.util.Date;
 public class Conge {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long conge_id;;
-    private String conge_type;
-    private LocalDate conge_date_debut;
-    private LocalDate conge_date_fin;
-    private String conge_description;
-    private int conge_nb_jours;
+    private long congeId;;
+    private String congeType;
+    private LocalDate congeDateDebut;
+    private LocalDate congeDateFin;
+    private String congeDescription;
+    private int congeNbJours;
+    private String congeStatus;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "agent_id")
     private Agent agent;
 
-
-    public long getConge_id() {
-        return conge_id;
+    public String getCongeStatus() {
+        return congeStatus;
     }
 
-    public void setConge_id(long conge_id) {
-        this.conge_id = conge_id;
+    public void setCongeStatus(String congeStatus) {
+        this.congeStatus = congeStatus;
     }
 
-    public String getConge_type() {
-        return conge_type;
+    public long getCongeId() {
+        return congeId;
     }
 
-    public void setConge_type(String conge_type) {
-        this.conge_type = conge_type;
+    public void setCongeId(long congeId) {
+        this.congeId = congeId;
     }
 
-    public LocalDate getConge_date_debut() {
-        return conge_date_debut;
+    public String getCongeType() {
+        return congeType;
     }
 
-    public void setConge_date_debut(LocalDate conge_date_debut) {
-        this.conge_date_debut = conge_date_debut;
+    public void setCongeType(String congeType) {
+        this.congeType = congeType;
     }
 
-    public LocalDate getConge_date_fin() {
-        return conge_date_fin;
+    public LocalDate getCongeDateDebut() {
+        return congeDateDebut;
     }
 
-    public void setConge_date_fin(LocalDate conge_date_fin) {
-        this.conge_date_fin = conge_date_fin;
+    public void setCongeDateDebut(LocalDate congeDateDebut) {
+        this.congeDateDebut = congeDateDebut;
     }
 
-    public String getConge_description() {
-        return conge_description;
+    public LocalDate getCongeDateFin() {
+        return congeDateFin;
     }
 
-    public void setConge_description(String conge_description) {
-        this.conge_description = conge_description;
+    public void setCongeDateFin(LocalDate congeDateFin) {
+        this.congeDateFin = congeDateFin;
     }
 
-    public int getConge_nb_jours() {
-        return conge_nb_jours;
+    public String getCongeDescription() {
+        return congeDescription;
     }
 
-    public void setConge_nb_jours(int conge_nb_jours) {
-        this.conge_nb_jours = conge_nb_jours;
+    public void setCongeDescription(String congeDescription) {
+        this.congeDescription = congeDescription;
+    }
+
+    public int getCongeNbJours() {
+        return congeNbJours;
+    }
+
+    public void setCongeNbJours(int congeNbJours) {
+        this.congeNbJours = congeNbJours;
     }
 
     public Agent getAgent() {

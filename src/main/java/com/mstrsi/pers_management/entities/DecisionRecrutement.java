@@ -18,13 +18,13 @@ import java.time.LocalDate;
 public class DecisionRecrutement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long decision_id;
+    private long decisionId;
 
     @Column(nullable = false, unique = true)
-    private String decision_numero;
+    private String decisionNumero;
 
-    private LocalDate decision_date;
-    private LocalDate date_effet_previsionnelle;
+    private LocalDate decisionDate;
+    private LocalDate dateEffetPrevisionnelle;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "poste_id")
@@ -38,35 +38,35 @@ public class DecisionRecrutement {
     private Visa visa;
 
     public long getDecision_id() {
-        return decision_id;
+        return decisionId;
     }
 
-    public void setDecision_id(long decision_id) {
-        this.decision_id = decision_id;
+    public void setDecisionId(long decisionId) {
+        this.decisionId = decisionId;
     }
 
-    public String getDecision_numero() {
-        return decision_numero;
+    public String getDecisionNumero() {
+        return decisionNumero;
     }
 
-    public void setDecision_numero(String decision_numero) {
-        this.decision_numero = decision_numero;
+    public void setDecisionNumero(String decisionNumero) {
+        this.decisionNumero = decisionNumero;
     }
 
-    public LocalDate getDecision_date() {
-        return decision_date;
+    public LocalDate getDecisionDate() {
+        return decisionDate;
     }
 
-    public void setDecision_date(LocalDate decision_date) {
-        this.decision_date = decision_date;
+    public void setDecisionDate(LocalDate decisionDate) {
+        this.decisionDate = decisionDate;
     }
 
-    public LocalDate getDate_effet_previsionnelle() {
-        return date_effet_previsionnelle;
+    public LocalDate getDateEffetPrevisionnelle() {
+        return dateEffetPrevisionnelle;
     }
 
-    public void setDate_effet_previsionnelle(LocalDate date_effet_previsionnelle) {
-        this.date_effet_previsionnelle = date_effet_previsionnelle;
+    public void setDateEffetPrevisionnelle(LocalDate dateEffetPrevisionnelle) {
+        this.dateEffetPrevisionnelle = dateEffetPrevisionnelle;
     }
 
     public Poste getPoste() {

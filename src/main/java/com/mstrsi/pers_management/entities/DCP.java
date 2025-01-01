@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class DCP {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long dcp_id;
-    private String dcp_name;
+    private long dcpId;
+    private String dcpName;
 
 }
