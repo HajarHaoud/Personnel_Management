@@ -34,6 +34,9 @@ public class Agent {
     private LocalDate joinDate;
     private double salary;
 
+    @ManyToOne
+    @JoinColumn(name = "grade_id")
+    private Grade grade;
 
     @OneToMany(mappedBy = "agent", fetch = FetchType.LAZY)
     private List<GradeHistory> gradeHistory;
@@ -220,5 +223,13 @@ public class Agent {
 
     public void setAvisPriseFonction(AvisPriseFonction avisPriseFonction) {
         this.avisPriseFonction = avisPriseFonction;
+    }
+
+    public Grade getGrade() {
+        return grade;
+    }
+
+    public void setGrade(Grade grade) {
+        this.grade = grade;
     }
 }

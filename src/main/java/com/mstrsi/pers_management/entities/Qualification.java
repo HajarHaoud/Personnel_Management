@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
-@Data
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -25,4 +25,51 @@ public class Qualification {
     @JoinColumn(name = "agent_id")
     private Agent agent;
 
+    public long getQualificationId() {
+        return qualificationId;
+    }
+
+    public void setQualificationId(long qualificationId) {
+        this.qualificationId = qualificationId;
+    }
+
+    public String getQualificationName() {
+        return qualificationName;
+    }
+
+    public void setQualificationName(String qualificationName) {
+        this.qualificationName = qualificationName;
+    }
+
+    public String getQualificationDescription() {
+        return qualificationDescription;
+    }
+
+    public void setQualificationDescription(String qualificationDescription) {
+        this.qualificationDescription = qualificationDescription;
+    }
+
+    public LocalDate getQualificationDate() {
+        return qualificationDate;
+    }
+
+    public void setQualificationDate(LocalDate qualificationDate) {
+        this.qualificationDate = qualificationDate;
+    }
+
+    public String getQualificationType() {
+        return qualificationType;
+    }
+
+    public void setQualificationType(String qualificationType) {
+        this.qualificationType = qualificationType;
+    }
+
+    public Agent getAgent() {
+        return agent;
+    }
+
+    public void setAgent(Agent agent) {
+        this.agent = agent;
+    }
 }

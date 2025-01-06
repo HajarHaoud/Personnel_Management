@@ -18,6 +18,14 @@ public class AgentService {
    private AgentRepository agentRepository;
    @Autowired
    private CongeRepository congeRepository;
+   @Autowired
+   private GradeRepository gradeRepository;
+   @Autowired
+   private AffectationRepository affectationRepository;
+   @Autowired
+   private PosteRepository posteRepository;
+   @Autowired
+   private QualificationRepository qualificationRepository;
 
 
     public Agent getAgent(long id) {
@@ -35,8 +43,9 @@ public class AgentService {
    }
 
 
-   public void updateAgent(Agent agent) {
-       Agent oldAgent = agentRepository.findById(agent.getId()).get();
+   public void updateAgent(Long id , Agent agent) {
+       Agent oldAgent = agentRepository.findById(id)
+               .orElseThrow(() -> new RuntimeException("Agent n'existe pas"));
 
        oldAgent.setFirstname(agent.getFirstname());
        oldAgent.setLastname(agent.getLastname());
@@ -61,20 +70,85 @@ public class AgentService {
        return agentRepository.save(agent);
    }
 
-    // Ajouter Conges a l'agent
+
     public Agent ajouterConge(Long agentId, Conge conge) {
-        // Récupérez l'agent depuis la base de données
         Agent agent = agentRepository.findById(agentId)
                 .orElseThrow(() -> new EntityNotFoundException("Agent introuvable"));
 
-        // Ajoutez le congé à la liste des congés de l'agent
-        conge.setAgent(agent); // Associez l'agent au congé
+        conge.setAgent(agent);
         agent.getConges().add(conge);
 
-        // Sauvegardez les deux entités
-        congeRepository.save(conge); // Sauvegarde indépendante du congé
-        return agentRepository.save(agent); // Sauvegarde de l'agent avec sa liste mise à jour
+        congeRepository.save(conge);
+        return agentRepository.save(agent);
     }
+
+    public Agent assignGradeToAgent(Long agentId, Long gradeId) {
+        Agent agent = agentRepository.findById(agentId)
+                .orElseThrow(() -> new RuntimeException("Agent not found with ID: " + agentId));
+
+        Grade grade = gradeRepository.findById(gradeId)
+                .orElseThrow(() -> new RuntimeException("Grade not found with ID: " + gradeId));
+
+        agent.setGrade(grade);
+
+        return agentRepository.save(agent);
+    }
+
+    // Ajouter une qualification à un agent
+    public Agent ajouterQualification(Long agentId, Qualification qualification) {
+        Agent agent = agentRepository.findById(agentId)
+                .orElseThrow(() -> new EntityNotFoundException("Agent introuvable"));
+
+        qualification.setAgent(agent);
+        qualificationRepository.save(qualification);
+
+        return agent;
+    }
+
+    // Récupérer les qualifications d'un agent
+    public List<Qualification> getQualificationsByAgent(Long agentId) {
+        Agent agent = agentRepository.findById(agentId)
+                .orElseThrow(() -> new EntityNotFoundException("Agent introuvable"));
+        return qualificationRepository.findByAgent(agent);
+    }
+
+    // Assigner un poste à un agent
+    public Agent assignPosteToAgent(Long agentId, Long posteId) {
+        Agent agent = agentRepository.findById(agentId)
+                .orElseThrow(() -> new EntityNotFoundException("Agent introuvable"));
+
+        Poste poste = posteRepository.findById(posteId)
+                .orElseThrow(() -> new EntityNotFoundException("Poste introuvable"));
+
+        agent.setPoste(poste);
+        return agentRepository.save(agent);
+    }
+
+    // Récupérer le poste d'un agent
+    public Poste getPosteByAgent(Long agentId) {
+        Agent agent = agentRepository.findById(agentId)
+                .orElseThrow(() -> new EntityNotFoundException("Agent introuvable"));
+        return agent.getPoste();
+    }
+
+    // Ajouter une affectation à un agent
+    public Agent ajouterAffectation(Long agentId, Affectation affectation) {
+        Agent agent = agentRepository.findById(agentId)
+                .orElseThrow(() -> new EntityNotFoundException("Agent introuvable"));
+
+        affectation.setAgent(agent);
+        affectationRepository.save(affectation);
+
+        return agent;
+    }
+
+    // Récupérer les affectations d'un agent
+    public List<Affectation> getAffectationsByAgent(Long agentId) {
+        Agent agent = agentRepository.findById(agentId)
+                .orElseThrow(() -> new EntityNotFoundException("Agent introuvable"));
+        return affectationRepository.findByAgent(agent);
+    }
+
 
 
 }

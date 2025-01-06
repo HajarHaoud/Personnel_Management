@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 
 @AllArgsConstructor
@@ -21,11 +22,29 @@ public class Grade {
     private String gradeDescription;
     private LocalDate gradeDate;
 
+    @OneToMany(mappedBy = "grade")
+    private List<Agent> agents;
 
 
     @ManyToOne
     @JoinColumn(name = "poste_id")
     private Poste poste;
+
+    public List<Agent> getAgents() {
+        return agents;
+    }
+
+    public void setAgents(List<Agent> agents) {
+        this.agents = agents;
+    }
+
+    public Poste getPoste() {
+        return poste;
+    }
+
+    public void setPoste(Poste poste) {
+        this.poste = poste;
+    }
 
     public long getGradeId() {
         return gradeId;
