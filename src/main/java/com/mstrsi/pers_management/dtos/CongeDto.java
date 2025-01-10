@@ -1,16 +1,14 @@
-package com.mstrsi.pers_management.entities;
+package com.mstrsi.pers_management.dtos;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 
-@Entity
-@Table(name = "conge")
-public class Conge {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+public class CongeDto {
     private Long id ;
     private String congeType ;
     private LocalDate congeDateDebut ;
@@ -18,16 +16,12 @@ public class Conge {
     private String congeDescription ;
     private int congeNbJours ;
     private String congeStatus ;
-
     @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "agent_id")
-    private Agent agent;
+    private Long agentId;
 
-    public Conge() {
-    }
+    public CongeDto() {}
 
-    public Conge(Long id, String congeType, LocalDate congeDateDebut, LocalDate congeDateFin, String congeDescription, int congeNbJours, String congeStatus) {
+    public CongeDto(Long id, String congeType, LocalDate congeDateDebut, LocalDate congeDateFin, String congeDescription, int congeNbJours, String congeStatus) {
         this.id = id;
         this.congeType = congeType;
         this.congeDateDebut = congeDateDebut;
@@ -35,14 +29,6 @@ public class Conge {
         this.congeDescription = congeDescription;
         this.congeNbJours = congeNbJours;
         this.congeStatus = congeStatus;
-    }
-
-    public Agent getAgent() {
-        return agent;
-    }
-
-    public void setAgent(Agent agent) {
-        this.agent = agent;
     }
 
     public Long getId() {
@@ -99,5 +85,13 @@ public class Conge {
 
     public void setCongeStatus(String congeStatus) {
         this.congeStatus = congeStatus;
+    }
+
+    public Long getAgentId() {
+        return agentId;
+    }
+
+    public void setAgentId(Long agentId) {
+        this.agentId = agentId;
     }
 }

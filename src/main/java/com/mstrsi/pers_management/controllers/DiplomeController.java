@@ -1,52 +1,40 @@
 package com.mstrsi.pers_management.controllers;
 
-import com.mstrsi.pers_management.entities.Diplome;
-import com.mstrsi.pers_management.repositories.DiplomeRepository;
-import com.mstrsi.pers_management.services.AgentService;
+
+import com.mstrsi.pers_management.dtos.DiplomeDto;
 import com.mstrsi.pers_management.services.DiplomeService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/diplome")
+@RequestMapping("diplomes")
 public class DiplomeController {
-    @Autowired
     private DiplomeService diplomeService;
-
-
-    @PostMapping("/agent/{agentId}")
-    public ResponseEntity<Diplome> addDiplome(@PathVariable Long agentId , @RequestBody Diplome diplome) {
-        Diplome newDiplome = diplomeService.ajouterDiplome(agentId, diplome);
-        return ResponseEntity.ok(newDiplome);
+    public DiplomeController(DiplomeService diplomeService) {
+        this.diplomeService = diplomeService;
     }
-
-    @GetMapping("/agent/{agentId}")
-    public ResponseEntity<List<Diplome>> getDiplomesByAgent(@PathVariable Long agentId) {
-        List<Diplome> diplomes = diplomeService.getDiplomeByAgent(agentId);
-        return ResponseEntity.ok(diplomes);
+    @PostMapping
+    public ResponseEntity<DiplomeDto> addDiplome(@RequestBody DiplomeDto diplomeDto) {
+        return new ResponseEntity<>(diplomeService.createDiplome(diplomeDto), HttpStatus.CREATED);
     }
-
-    @GetMapping("/{diplomeId}")
-    public ResponseEntity<Diplome> getDiplomeById(@PathVariable Long diplomeId) {
-        Diplome diplome = diplomeService.getDiplomeById(diplomeId);
-        return ResponseEntity.ok(diplome);
+    @PutMapping("/{id}")
+    public ResponseEntity<DiplomeDto> modifyDiplome( @PathVariable Long id, @RequestBody DiplomeDto diplomeDto) {
+        return new ResponseEntity<>(diplomeService.updateDiplome(id, diplomeDto), HttpStatus.OK);
     }
-
-    @PutMapping("/{diplomeId}")
-    public ResponseEntity<Diplome> updateDiplome(@PathVariable Long diplomeId, @RequestBody Diplome diplome) {
-        Diplome updated = diplomeService.updateDiplome(diplomeId, diplome);
-        return ResponseEntity.ok(updated);
+    @GetMapping("/{id}")
+    public ResponseEntity<DiplomeDto> getDiplome(@PathVariable Long id) {
+        return new ResponseEntity<>(diplomeService.getDiplomeById(id), HttpStatus.OK);
     }
-
-    @DeleteMapping("/{diplomeId}")
-    public ResponseEntity<Void> deleteDiplome(@PathVariable Long diplomeId) {
-        diplomeService.deleteDiplome(diplomeId);
-        return ResponseEntity.noContent().build();
+    @GetMapping
+    public ResponseEntity<List<DiplomeDto>> getAllDiplomes() {
+        return new ResponseEntity<>(diplomeService.getAllDiplomes(), HttpStatus.OK);
     }
-
-
-
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteDiplome(@PathVariable Long id) {
+        diplomeService.deleteDiplome(id);
+        return  ResponseEntity.ok("Diplome deleted Successfully");
+    }
 }

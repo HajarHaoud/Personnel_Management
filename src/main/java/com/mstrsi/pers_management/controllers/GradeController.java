@@ -1,61 +1,47 @@
 package com.mstrsi.pers_management.controllers;
 
-import com.mstrsi.pers_management.entities.Agent;
-import com.mstrsi.pers_management.entities.Grade;
-import com.mstrsi.pers_management.services.AgentService;
+
+import com.mstrsi.pers_management.dtos.GradeDto;
 import com.mstrsi.pers_management.services.GradeService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/api/grade")
+@RequestMapping("grades")
 public class GradeController {
-    @Autowired
     private GradeService gradeService;
-    @Autowired
-    private AgentService agentService;
-
-
-    @GetMapping
-    public ResponseEntity<List<Grade>> getAllGrades() {
-        List<Grade> grades = gradeService.getAllGrades();
-        return ResponseEntity.ok(grades);
+    public GradeController(GradeService gradeService) {
+        this.gradeService = gradeService;
     }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Grade> getGradeById(@PathVariable Long id) {
-        Grade grade = gradeService.getGradeById(id);
-        return ResponseEntity.ok(grade);
-    }
-
     @PostMapping
-    public ResponseEntity<Grade> createGrade(@RequestBody Grade grade) {
-        Grade newGrade = gradeService.addGrade(grade);
-        return ResponseEntity.status(HttpStatus.CREATED).body(newGrade);
+    public ResponseEntity<GradeDto> addGrade(@RequestBody GradeDto gradeDto) {
+        return new ResponseEntity<>(gradeService.createGrade(gradeDto), HttpStatus.CREATED);
     }
-
-    @PutMapping
-    public ResponseEntity<Grade> updateGrade(@PathVariable Long id , @RequestBody Grade grade) {
-        Grade updatedGrade = gradeService.updateGrade(id, grade);
-        return ResponseEntity.ok(updatedGrade);
+    @PutMapping("/{id}")
+    public ResponseEntity<GradeDto> modifyGrade( @PathVariable Long id, @RequestBody GradeDto gradeDto) {
+        return new ResponseEntity<>(gradeService.updateGrade(id, gradeDto), HttpStatus.OK);
     }
-
+    @GetMapping("/{id}")
+    public ResponseEntity<GradeDto> getGrade(@PathVariable Long id) {
+        return new ResponseEntity<>(gradeService.getGradeById(id), HttpStatus.OK);
+    }
+    @GetMapping
+    public ResponseEntity<List<GradeDto>> getAllGrades() {
+        return new ResponseEntity<>(gradeService.getAllGrades(), HttpStatus.OK);
+    }
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteGrade(@PathVariable Long id) {
+    public ResponseEntity<String> deleteGrade(@PathVariable Long id) {
         gradeService.deleteGrade(id);
-        return ResponseEntity.noContent().build();
+        return  ResponseEntity.ok("Grade deleted Successfully");
     }
-
-
-    @PutMapping("/{gradeId}/assign-to-grade/{agentId}")
-    public ResponseEntity<Agent> assignGradeToAgent(@PathVariable Long gardeId,@RequestBody Long agentId) {
-        Agent agent = agentService.assignGradeToAgent(gardeId, agentId);
-        return ResponseEntity.ok(agent);
-    }
-
 
 }

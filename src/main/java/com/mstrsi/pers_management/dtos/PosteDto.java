@@ -1,56 +1,27 @@
-package com.mstrsi.pers_management.entities;
+package com.mstrsi.pers_management.dtos;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 
-@Entity
-@Table(name = "poste")
+public class PosteDto {
 
-public class Poste {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id ;
     private String posteName ;
     private String posteDescription ;
     private int posteSalary ;
-
-
     @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "agent_id")
-    private Agent agent;
-
+    private Long agentId;
     @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "unite_affectation_id")
-    private UniteAffectation uniteAffectation;
+    private Long uniteAffectationId;
 
-
-    public Poste() {
-    }
-
-    public Poste(Long id, String posteName, String posteDescription, int posteSalary) {
+    public PosteDto(Long id, String posteName, String posteDescription, int posteSalary) {
         this.id = id;
         this.posteName = posteName;
         this.posteDescription = posteDescription;
         this.posteSalary = posteSalary;
     }
-
-    public UniteAffectation getUniteAffectation() {
-        return uniteAffectation;
-    }
-
-    public void setUniteAffectation(UniteAffectation uniteAffectation) {
-        this.uniteAffectation = uniteAffectation;
-    }
-
-    public Agent getAgent() {
-        return agent;
-}
-public void setAgent(Agent agent) {
-        this.agent = agent;
-}
 
     public Long getId() {
         return id;
@@ -82,5 +53,21 @@ public void setAgent(Agent agent) {
 
     public void setPosteSalary(int posteSalary) {
         this.posteSalary = posteSalary;
+    }
+
+    public Long getAgentId() {
+        return agentId;
+    }
+
+    public void setAgentId(Long agentId) {
+        this.agentId = agentId;
+    }
+
+    public Long getUniteAffectationId() {
+        return uniteAffectationId;
+    }
+
+    public void setUniteAffectationId(Long uniteAffectationId) {
+        this.uniteAffectationId = uniteAffectationId;
     }
 }

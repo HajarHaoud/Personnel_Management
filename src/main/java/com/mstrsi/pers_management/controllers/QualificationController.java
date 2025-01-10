@@ -1,56 +1,38 @@
 package com.mstrsi.pers_management.controllers;
-
-import com.mstrsi.pers_management.entities.Qualification;
+import com.mstrsi.pers_management.dtos.QualificationDto;
 import com.mstrsi.pers_management.services.QualificationService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/qualification")
+@RequestMapping("qualifications")
 public class QualificationController {
-    @Autowired
     private QualificationService qualificationService;
-
-    @GetMapping
-    public List<Qualification> getAllQualifications() {
-        return qualificationService.getAllQualifications();
+    public QualificationController(QualificationService qualificationService) {
+        this.qualificationService = qualificationService;
     }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Qualification> getQualificationById(@PathVariable Long id) {
-        Optional<Qualification> qualification = qualificationService.getQualificationById(id);
-        return qualification.map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
     @PostMapping
-    public Qualification createQualification(@RequestBody Qualification qualification) {
-        return qualificationService.saveQualification(qualification);
+    public ResponseEntity<QualificationDto> addQualification(@RequestBody QualificationDto qualificationDto) {
+        return new ResponseEntity<>(qualificationService.createQualification(qualificationDto), HttpStatus.CREATED);
     }
-
     @PutMapping("/{id}")
-    public ResponseEntity<Qualification> updateQualification(@PathVariable Long id, @RequestBody Qualification qualificationDetails) {
-        Optional<Qualification> existingQualification = qualificationService.getQualificationById(id);
-        if (existingQualification.isPresent()) {
-            Qualification updatedQualification = existingQualification.get();
-            updatedQualification.setQualificationName(qualificationDetails.getQualificationName());
-            updatedQualification.setQualificationDescription(qualificationDetails.getQualificationDescription());
-            updatedQualification.setQualificationDate(qualificationDetails.getQualificationDate());
-            updatedQualification.setQualificationType(qualificationDetails.getQualificationType());
-            updatedQualification.setAgent(qualificationDetails.getAgent());
-            return ResponseEntity.ok(qualificationService.saveQualification(updatedQualification));
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<QualificationDto> modifyQualification( @PathVariable Long id, @RequestBody QualificationDto qualificationDto) {
+        return new ResponseEntity<>(qualificationService.updateQualification(id, qualificationDto), HttpStatus.OK);
     }
-
+    @GetMapping("/{id}")
+    public ResponseEntity<QualificationDto> getQualificationById(@PathVariable Long id) {
+        return new ResponseEntity<>(qualificationService.getQualificationById(id), HttpStatus.OK);
+    }
+    @GetMapping
+    public ResponseEntity<List<QualificationDto>> getAllQualifications() {
+        return new ResponseEntity<>(qualificationService.getAllQualifications(), HttpStatus.OK);
+    }
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteQualification(@PathVariable Long id) {
+    public ResponseEntity<String> deleteQualification(@PathVariable Long id) {
         qualificationService.deleteQualification(id);
-        return ResponseEntity.noContent().build();
+        return  ResponseEntity.ok("Qualification deleted Successfully");
     }
 }

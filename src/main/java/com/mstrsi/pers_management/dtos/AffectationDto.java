@@ -1,58 +1,44 @@
-package com.mstrsi.pers_management.entities;
+package com.mstrsi.pers_management.dtos;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 
-@Entity
-@Table(name = "affectations")
-public class Affectation {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class AffectationDto {
     private Long id;
     private String affectationName ;
     private LocalDate affectationDate ;
     private LocalDate endAffectationDate ;
-
     @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "agent_id")
-    private Agent agent;
-
+    private Long agentId;
     @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "unite_affectation_id")
-    private UniteAffectation uniteAffectation;
+    private Long uniteAffectationId;
 
 
-    public Affectation() {
-
-    }
-
-    public Affectation(Long id, String affectationName, LocalDate affectationDate, LocalDate endAffectationDate) {
+    public AffectationDto(Long id, String affectationName, LocalDate affectationDate, LocalDate endAffectationDate) {
         this.id = id;
         this.affectationName = affectationName;
         this.affectationDate = affectationDate;
         this.endAffectationDate = endAffectationDate;
-
     }
 
-    public UniteAffectation getUniteAffectation() {
-        return uniteAffectation;
+    public Long getUniteAffectationId() {
+        return uniteAffectationId;
     }
 
-    public void setUniteAffectation(UniteAffectation uniteAffectation) {
-        this.uniteAffectation = uniteAffectation;
+    public void setUniteAffectationId(Long uniteAffectationId) {
+        this.uniteAffectationId = uniteAffectationId;
     }
 
-    public Agent getAgent() {
-        return agent;
+    public Long getAgentId() {
+        return agentId;
     }
 
-    public void setAgent(Agent agent) {
-        this.agent = agent;
+    public void setAgentId(Long agentId) {
+        this.agentId = agentId;
     }
 
     public Long getId() {
@@ -86,6 +72,4 @@ public class Affectation {
     public void setEndAffectationDate(LocalDate endAffectationDate) {
         this.endAffectationDate = endAffectationDate;
     }
-
-
 }

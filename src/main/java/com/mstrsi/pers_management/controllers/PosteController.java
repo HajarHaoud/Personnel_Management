@@ -1,67 +1,45 @@
 package com.mstrsi.pers_management.controllers;
 
-import com.mstrsi.pers_management.entities.Grade;
-import com.mstrsi.pers_management.entities.Poste;
+
+import com.mstrsi.pers_management.dtos.PosteDto;
 import com.mstrsi.pers_management.services.PosteService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/postes")
+@RequestMapping("postes")
 public class PosteController {
-    @Autowired
     private PosteService posteService;
 
+    public PosteController(PosteService posteService) {
+        this.posteService = posteService;
+    }
 
     @PostMapping
-    public ResponseEntity<Poste> addPoste(@RequestBody Poste poste) {
-        Poste createdPoste = posteService.addPoste(poste);
-        return ResponseEntity.ok(createdPoste);
+    public ResponseEntity<PosteDto> addPoste(@RequestBody PosteDto posteDto) {
+        return new ResponseEntity<>(posteService.createPoste(posteDto), HttpStatus.CREATED);
     }
-
+    @PutMapping("/{id}")
+    public ResponseEntity<PosteDto> modifyPoste( @PathVariable Long id, @RequestBody PosteDto posteDto) {
+        return new ResponseEntity<>(posteService.updatePoste(id, posteDto), HttpStatus.OK);
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<PosteDto> getPoste(@PathVariable Long id) {
+        return new ResponseEntity<>(posteService.getPosteById(id), HttpStatus.OK);
+    }
     @GetMapping
-    public ResponseEntity<List<Poste>> getAllPostes() {
-        List<Poste> postes = posteService.getAllPostes();
-        return ResponseEntity.ok(postes);
+    public ResponseEntity<List<PosteDto>> getAllPostes() {
+        return new ResponseEntity<>(posteService.getAllPostes(), HttpStatus.OK);
     }
-
-    @GetMapping("/exists/{posteId}")
-    public ResponseEntity<Boolean> existsById(@PathVariable Long posteId) {
-        boolean exists = posteService.existsById(posteId);
-        return ResponseEntity.ok(exists);
-    }
-
-    @GetMapping("/search")
-    public ResponseEntity<List<Poste>> findPostesByNom(@RequestParam String posteName) {
-        List<Poste> postes = posteService.findPostesByNom(posteName);
-        return ResponseEntity.ok(postes);
-    }
-
-    @GetMapping("/count")
-    public ResponseEntity<Long> countPostes() {
-        long count = posteService.countPostes();
-        return ResponseEntity.ok(count);
-    }
-
-    @PutMapping("/{posteId}")
-    public ResponseEntity<Poste> updatePoste(@PathVariable Long posteId, @RequestBody Poste posteDetails) {
-        Poste updatedPoste = posteService.updatePoste(posteId, posteDetails);
-        return ResponseEntity.ok(updatedPoste);
-    }
-
-    @PostMapping("/{posteId}/grades")
-    public ResponseEntity<Void> assignerGradeAuPoste(@PathVariable Long posteId, @RequestBody Grade grade) {
-        posteService.assignerGradeAuPoste(posteId, grade);
-        return ResponseEntity.ok().build();
-    }
-
-    @DeleteMapping("/{posteId}")
-    public ResponseEntity<Void> deletePoste(@PathVariable Long posteId) {
-        posteService.deletePoste(posteId);
-        return ResponseEntity.noContent().build();
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deletePostee(@PathVariable Long id) {
+        posteService.deletePoste(id);
+        return  ResponseEntity.ok("Poste deleted Successfully");
     }
 
 }
+

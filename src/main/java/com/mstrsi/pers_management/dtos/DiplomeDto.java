@@ -1,43 +1,27 @@
-package com.mstrsi.pers_management.entities;
+package com.mstrsi.pers_management.dtos;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
-@Table(name = "diplomes")
-@Entity
-public class Diplome {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id ;
+
+public class DiplomeDto {
+    private Long id;
+
     private String nomDiplome;
     private LocalDate dateObtention;
     private String etablissement;
 
     @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "agent_id")
-    private Agent agent;
+    private Long agentId;
 
-    public Diplome() {
-    }
-
-    public Diplome(Long id, String nomDiplome, LocalDate dateObtention, String etablissement) {
+    public DiplomeDto(Long id, String nomDiplome, LocalDate dateObtention, String etablissement) {
         this.id = id;
         this.nomDiplome = nomDiplome;
         this.dateObtention = dateObtention;
         this.etablissement = etablissement;
-    }
-
-
-
-    public Agent getAgent() {
-        return agent;
-    }
-
-    public void setAgent(Agent agent) {
-        this.agent = agent;
     }
 
     public Long getId() {
@@ -72,4 +56,11 @@ public class Diplome {
         this.etablissement = etablissement;
     }
 
+    public Long getAgentId() {
+        return agentId;
+    }
+
+    public void setAgentId(Long agentId) {
+        this.agentId = agentId;
+    }
 }

@@ -1,108 +1,205 @@
 package com.mstrsi.pers_management.controllers;
 
 
+import com.mstrsi.pers_management.dtos.*;
 import com.mstrsi.pers_management.entities.*;
-import com.mstrsi.pers_management.repositories.AgentRepository;
-import com.mstrsi.pers_management.repositories.CongeRepository;
 import com.mstrsi.pers_management.services.AgentService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/agents")
-@CrossOrigin("*")
+@RequestMapping("/agents")
 public class AgentController {
-    @Autowired
     private AgentService agentService;
 
-    @Autowired
-    private CongeRepository congeRepository;
-    @Autowired
-    private AgentRepository agentRepository;
-
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Agent> getAgent(@PathVariable long id) {
-        return ResponseEntity.ok(agentService.getAgent(id));
-    }
-
-
-    @GetMapping
-    public ResponseEntity<List<Agent>> getAllAgents() {
-        return ResponseEntity.ok(agentService.getAllAgents());
+    public AgentController(AgentService agentService) {
+        this.agentService = agentService;
     }
 
     @PostMapping
-    public ResponseEntity<Agent> saveAgent(@RequestBody Agent agent) {
-        return ResponseEntity.ok(agentService.saveAgent(agent));
+    public ResponseEntity<AgentDto> addAgent(@RequestBody AgentDto agentDto) {
+        return new ResponseEntity<>(agentService.createAgent(agentDto), HttpStatus.CREATED);
     }
 
-    @PutMapping
-    public ResponseEntity<Void> updateAgent(@PathVariable Long id , @RequestBody Agent agent) {
-        agentService.updateAgent(id , agent);
-        return ResponseEntity.ok().build();
+    @PutMapping("/{id}")
+    public ResponseEntity<AgentDto> modifyAgent(@PathVariable Long id, @RequestBody AgentDto agentDto) {
+        return new ResponseEntity<>(agentService.updateAgent(id, agentDto), HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<AgentDto> getAgent(@PathVariable Long id) {
+        return new ResponseEntity<>(agentService.getAgentById(id), HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<AgentDto>> getAllAgents() {
+        return new ResponseEntity<>(agentService.getAllAgents(), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAgent(@PathVariable long id) {
+    public ResponseEntity<String> deleteAgent(@PathVariable Long id) {
         agentService.deleteAgent(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("Agent deleted Successfully");
     }
 
-    @PostMapping("/{agentId}/conges")
-    public ResponseEntity<Agent> ajouterConge(@PathVariable Long agentId, @RequestBody Conge conge) {
-        Agent agentMisAJour = agentService.ajouterConge(agentId, conge);
-        return ResponseEntity.ok(agentMisAJour);
+    // grade
+    @PostMapping("/{agentId}/grades/{gradeId}")
+    public ResponseEntity<AgentDto> addGradeToAgent(@PathVariable Long agentId, @PathVariable Long gradeId) {
+        Grade grade = new Grade();
+        grade.setId(gradeId);
+        return new ResponseEntity<>(agentService.addGradeToAgent(agentId, gradeId), HttpStatus.CREATED);
     }
 
-    @PutMapping("/{agentId}/assign-grade/{gradeId}")
-    public ResponseEntity<Agent> assignGrade(@PathVariable Long agentId, @PathVariable Long gradeId) {
-        Agent updatedAgent = agentService.assignGradeToAgent(agentId, gradeId);
+    @DeleteMapping("/{agentId}/grades/{gradeId}")
+    public ResponseEntity<AgentDto> removeGradeFromAgent(@PathVariable Long agentId, @PathVariable Long gradeId) {
+        return new ResponseEntity<>(agentService.removeGradeFromAgent(agentId, gradeId), HttpStatus.OK);
+    }
+
+    @PutMapping("/{agentId}/grades/{gradeId}")
+    public ResponseEntity<AgentDto> updateGradeDiplome(@PathVariable Long agentId,
+                                                       @PathVariable Long gradeId,
+                                                       @RequestBody GradeDto gradeDto) {
+        AgentDto updatedAgent = agentService.updateAgentGrade(agentId, gradeId, gradeDto);
         return ResponseEntity.ok(updatedAgent);
     }
 
-    // Ajouter une qualification à un agent
-    @PostMapping("/{id}/qualifications")
-    public ResponseEntity<Agent> ajouterQualification(@PathVariable Long id, @RequestBody Qualification qualification) {
-        Agent agent = agentService.ajouterQualification(id, qualification);
-        return ResponseEntity.ok(agent);
+    @GetMapping("/{agentId}/grades")
+    public ResponseEntity<List<Grade>> getGradesByAgent(@PathVariable Long agentId) {
+        return new ResponseEntity<>(agentService.getGradesByAgent(agentId), HttpStatus.OK);
     }
 
-    // Récupérer les qualifications d'un agent
-    @GetMapping("/{id}/qualifications")
-    public ResponseEntity<List<Qualification>> getQualificationsByAgent(@PathVariable Long id) {
-        List<Qualification> qualifications = agentService.getQualificationsByAgent(id);
-        return ResponseEntity.ok(qualifications);
+    // diplomes
+    @PostMapping("/{agentId}/diplomes/{diplomeId}")
+    public ResponseEntity<AgentDto> addDiplomeToAgent(@PathVariable Long agentId, @PathVariable Long diplomeId) {
+        Diplome diplome = new Diplome();
+        diplome.setId(diplomeId);  // Associe l'ID du diplôme au nouvel objet Diplome
+        return new ResponseEntity<>(agentService.addDiplomeToAgent(agentId, diplomeId), HttpStatus.CREATED);
     }
 
-    // Assigner un poste à un agent
-    @PutMapping("/{id}/poste/{posteId}")
-    public ResponseEntity<Agent> assignPosteToAgent(@PathVariable Long id, @PathVariable Long posteId) {
-        Agent agent = agentService.assignPosteToAgent(id, posteId);
-        return ResponseEntity.ok(agent);
+    @DeleteMapping("/{agentId}/diplomes/{diplomeId}")
+    public ResponseEntity<AgentDto> removeDiplomeFromAgent(@PathVariable Long agentId, @PathVariable Long diplomeId) {
+        return new ResponseEntity<>(agentService.removeDiplomeFromAgent(agentId, diplomeId), HttpStatus.OK);
     }
 
-    // Récupérer le poste d'un agent
-    @GetMapping("/{id}/poste")
-    public ResponseEntity<Poste> getPosteByAgent(@PathVariable Long id) {
-        Poste poste = agentService.getPosteByAgent(id);
-        return ResponseEntity.ok(poste);
+    @PutMapping("/{agentId}/diplomes/{diplomeId}")
+    public ResponseEntity<AgentDto> updateAgentDiplome(@PathVariable Long agentId,
+                                                       @PathVariable Long diplomeId,
+                                                       @RequestBody DiplomeDto diplomeDto) {
+        AgentDto updatedAgent = agentService.updateAgentDiplome(agentId, diplomeId, diplomeDto);
+        return ResponseEntity.ok(updatedAgent);
     }
 
-    // Ajouter une affectation à un agent
-    @PostMapping("/{id}/affectations")
-    public ResponseEntity<Agent> ajouterAffectation(@PathVariable Long id, @RequestBody Affectation affectation) {
-        Agent agent = agentService.ajouterAffectation(id, affectation);
-        return ResponseEntity.ok(agent);
+    @GetMapping("/{agentId}/diplomes")
+    public ResponseEntity<List<Diplome>> getDiplomesByAgent(@PathVariable Long agentId) {
+        return new ResponseEntity<>(agentService.getDiplomesByAgent(agentId), HttpStatus.OK);
+    }
+    // Conge :
+
+    @PostMapping("/{agentId}/conges/{congeId}")
+    public ResponseEntity<AgentDto> addCongeToAgent(@PathVariable Long agentId, @PathVariable Long congeId) {
+        Conge conge = new Conge();
+        conge.setId(congeId);
+        return new ResponseEntity<>(agentService.addCongeToAgent(agentId, congeId), HttpStatus.CREATED);
     }
 
-    // Récupérer les affectations d'un agent
-    @GetMapping("/{id}/affectations")
-    public ResponseEntity<List<Affectation>> getAffectationsByAgent(@PathVariable Long id) {
-        List<Affectation> affectations = agentService.getAffectationsByAgent(id);
-        return ResponseEntity.ok(affectations);
+    @DeleteMapping("/{agentId}/conges/{congeId}")
+    public ResponseEntity<AgentDto> removeCongeFromAgent(@PathVariable Long agentId, @PathVariable Long congeId) {
+        return new ResponseEntity<>(agentService.removeCongeFromAgent(agentId, congeId), HttpStatus.OK);
     }
+
+    @PutMapping("/{agentId}/conges/{congeId}")
+    public ResponseEntity<AgentDto> updateAgentConge(@PathVariable Long agentId,
+                                                     @PathVariable Long congeId,
+                                                     @RequestBody CongeDto congeDto) {
+        AgentDto updatedAgent = agentService.updateAgentConge(agentId, congeId, congeDto);
+        return ResponseEntity.ok(updatedAgent);
+    }
+
+    @GetMapping("/{agentId}/conges")
+    public ResponseEntity<List<Conge>> getCongesByAgent(@PathVariable Long agentId) {
+        return new ResponseEntity<>(agentService.getCongesByAgent(agentId), HttpStatus.OK);
+    }
+
+    // postes
+    @PostMapping("/{agentId}/postes/{posteId}")
+    public ResponseEntity<AgentDto> addPoste(@PathVariable Long agentId, @PathVariable Long posteId) {
+        Poste poste = new Poste();
+        poste.setId(posteId);
+        return new ResponseEntity<>(agentService.addPosteToAgent(agentId, posteId), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{agentId}/postes/{posteId}")
+    public ResponseEntity<AgentDto> removePosteFromAgent(@PathVariable Long agentId, @PathVariable Long posteId) {
+        return new ResponseEntity<>(agentService.removePosteFromAgent(agentId, posteId), HttpStatus.OK);
+    }
+
+    @PutMapping("/{agentId}/postes/{posteId}")
+    public ResponseEntity<AgentDto> updateAgentPoste(@PathVariable Long agentId,
+                                                     @PathVariable Long posteId,
+                                                     @RequestBody PosteDto posteDto) {
+        AgentDto updatedAgent = agentService.updateAgentPoste(agentId, posteId, posteDto);
+        return ResponseEntity.ok(updatedAgent);
+    }
+
+    @GetMapping("/{agentId}/postes")
+    public ResponseEntity<List<Poste>> getPostesByAgent(@PathVariable Long agentId) {
+        return new ResponseEntity<>(agentService.getPostesByAgent(agentId), HttpStatus.OK);
+    }
+
+    // Gestion des qualifications
+    @PostMapping("/{agentId}/qualifications/{qualificationId}")
+    public ResponseEntity<AgentDto> addQualification(@PathVariable Long agentId, @PathVariable Long qualificationId) {
+        Qualification qualification = new Qualification();
+        qualification.setId(qualificationId);
+        return new ResponseEntity<>(agentService.addQualificationToAgent(agentId, qualificationId), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{agentId}/qualifications/{qualificationId}")
+    public ResponseEntity<AgentDto> removeQualificationFromAgent(@PathVariable Long agentId, @PathVariable Long qualificationId) {
+        return new ResponseEntity<>(agentService.removeQualificationFromAgent(agentId, qualificationId), HttpStatus.OK);
+    }
+
+    @PutMapping("/{agentId}/qualifications/{qualificationId}")
+    public ResponseEntity<AgentDto> updateAgentQualification(@PathVariable Long agentId,
+                                                             @PathVariable Long qualificationId,
+                                                             @RequestBody QualificationDto qualificationDto) {
+        AgentDto updatedAgent = agentService.updateAgentQualification(agentId, qualificationId, qualificationDto);
+        return ResponseEntity.ok(updatedAgent);
+    }
+
+    @GetMapping("/{agentId}/qualifications")
+    public ResponseEntity<List<Qualification>> getQualificationsByAgent(@PathVariable Long agentId) {
+        return new ResponseEntity<>(agentService.getQualificationsByAgent(agentId), HttpStatus.OK);
+    }
+
+    // gestion des affectations
+    @PostMapping("/{agentId}/affectations/{affectationId}")
+    public ResponseEntity<AgentDto> addAffectation(@PathVariable Long agentId, @PathVariable Long affectationId) {
+        Affectation affectation = new Affectation();
+        affectation.setId(affectationId);
+        return new ResponseEntity<>(agentService.addAffectationToAgent(agentId, affectationId), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{agentId}/affectations/{affectationId}")
+    public ResponseEntity<AgentDto> removeAffectationFromAgent(@PathVariable Long agentId, @PathVariable Long affectationId) {
+        return new ResponseEntity<>(agentService.removeAffectationFromAgent(agentId, affectationId), HttpStatus.OK);
+    }
+
+    @PutMapping("/{agentId}/affectations/{affectationId}")
+    public ResponseEntity<AgentDto> updateAgentAffectation(@PathVariable Long agentId,
+                                                           @PathVariable Long affectationId,
+                                                           @RequestBody AffectationDto affectationDto) {
+        AgentDto updatedAgent = agentService.updateAgentAffectation(agentId, affectationId, affectationDto);
+        return ResponseEntity.ok(updatedAgent);
+    }
+
+    @GetMapping("/{agentId}/affectations")
+    public ResponseEntity<List<Affectation>> getAffectationsByAgent(@PathVariable Long agentId) {
+        return new ResponseEntity<>(agentService.getAffectationsByAgent(agentId), HttpStatus.OK);
+    }
+
 }
+

@@ -1,44 +1,25 @@
-package com.mstrsi.pers_management.entities;
+package com.mstrsi.pers_management.dtos;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 
-@Table(name = "grades")
-@Entity
-public class Grade {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class GradeDto {
     private Long id;
-
-    @Column(name = "libelle_grade")
     private String libelleGrade;
     private LocalDate dateObtention;
     private LocalDate dateFinValidite;
-
     @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "agent_id")
-    private Agent agent;
+    private Long agentId;
 
-    public Grade() {}
-
-    public Grade(Long id, String libelleGrade, LocalDate dateObtention, LocalDate dateFinValidite) {
+    public GradeDto(Long id, String libelleGrade, LocalDate dateObtention, LocalDate dateFinValidite) {
         this.id = id;
         this.libelleGrade = libelleGrade;
         this.dateObtention = dateObtention;
         this.dateFinValidite = dateFinValidite;
-    }
-
-    public Agent getAgent() {
-        return agent;
-    }
-
-    public void setAgent(Agent agent) {
-        this.agent = agent;
     }
 
     public Long getId() {
@@ -71,5 +52,13 @@ public class Grade {
 
     public void setDateFinValidite(LocalDate dateFinValidite) {
         this.dateFinValidite = dateFinValidite;
+    }
+
+    public Long getAgentId() {
+        return agentId;
+    }
+
+    public void setAgentId(Long agentId) {
+        this.agentId = agentId;
     }
 }

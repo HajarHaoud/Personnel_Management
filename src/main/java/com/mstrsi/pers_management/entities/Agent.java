@@ -1,92 +1,149 @@
 package com.mstrsi.pers_management.entities;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
-@Table(name = "agent")
+@Table(name = "agents")
 public class Agent {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private String firstname;
-    private String lastname;
-    private String address;
-    private String email;
-    private String phone;
-    private String gender;
-    private LocalDate birthdate;
-    private String birthplace;
-    private String city;
-    private String country;
-    private LocalDate joinDate;
-    private double salary;
+    private Long id ;
+    private String firstName ;
+    private String lastName ;
+    private String address ;
+    private String email ;
+    private String phone ;
+    private String gender ;
+    private String birthDate ;
+    private String birthPlace ;
+    private String city ;
+    private String country ;
+    private LocalDate joinDate ;
+    private double salary ;
 
-    @ManyToOne
-    @JoinColumn(name = "grade_id")
-    private Grade grade;
+    public Agent() {
+    }
+    @JsonIgnore
+    @OneToMany(mappedBy = "agent", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Diplome> diplomes = new ArrayList<>();
 
-    @OneToMany(mappedBy = "agent", fetch = FetchType.LAZY)
-    private List<GradeHistory> gradeHistory;
+    @JsonIgnore
+    @OneToMany(mappedBy = "agent", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Grade> grades = new ArrayList<>();
 
-
-    @OneToMany(mappedBy = "agent", fetch = FetchType.LAZY)
-    private List<AffectationHistory> affectationHistories;
-
-    @OneToMany(mappedBy = "agent", fetch = FetchType.LAZY , cascade = CascadeType.ALL)
-    private List<Diplome> diplomes;
-
-
-
-    @OneToMany(mappedBy = "agent", fetch = FetchType.EAGER , cascade = CascadeType.ALL)
+    @JsonIgnore
+    @OneToMany(mappedBy = "agent", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Conge> conges = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "poste_id")
-    private Poste poste;
+    @JsonIgnore
+    @OneToMany(mappedBy = "agent", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Qualification> qualifications = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "decision_id")
-    private DecisionRecrutement decision;
+    @JsonIgnore
+    @OneToMany(mappedBy = "agent", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Poste> postes = new ArrayList<>();
 
-    @OneToOne(mappedBy = "agent")
-    private AvisPriseFonction avisPriseFonction;
+    @JsonIgnore
+    @OneToMany(mappedBy = "agent", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Affectation> affectations = new ArrayList<>();
+
+    private String decisionRecrutement;
 
 
-    public long getId() {
+
+
+
+    public Agent(Long id, String firstName, String lastName, String address, String email, String phone, String gender, String birthDate, String birthPlace, String city, String country, LocalDate joinDate, double salary) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.email = email;
+        this.phone = phone;
+        this.gender = gender;
+        this.birthDate = birthDate;
+        this.birthPlace = birthPlace;
+        this.city = city;
+        this.country = country;
+        this.joinDate = joinDate;
+        this.salary = salary;
+    }
+
+    public List<Affectation> getAffectations() {
+        return affectations;
+    }
+
+    public void setAffectations(List<Affectation> affectations) {
+        this.affectations = affectations;
+    }
+
+    public List<Poste> getPostes() {
+        return postes;
+    }
+
+    public void setPostes(List<Poste> postes) {
+        this.postes = postes;
+    }
+
+    public List<Qualification> getQualifications() {
+        return qualifications;
+    }
+
+    public void setQualifications(List<Qualification> qualifications) {
+        this.qualifications = qualifications;
+    }
+
+    public List<Conge> getConges() {
+        return conges;
+    }
+
+    public void setConges(List<Conge> conges) {
+        this.conges = conges;
+    }
+
+    public List<Grade> getGrades() {
+        return grades;
+    }
+
+    public void setGrades(List<Grade> grades) {
+        this.grades = grades;
+    }
+
+    public List<Diplome> getDiplomes() {
+        return diplomes;
+    }
+
+    public void setDiplomes(List<Diplome> diplomes) {
+        this.diplomes = diplomes;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getAddress() {
@@ -121,20 +178,20 @@ public class Agent {
         this.gender = gender;
     }
 
-    public LocalDate getBirthdate() {
-        return birthdate;
+    public String getBirthDate() {
+        return birthDate;
     }
 
-    public void setBirthdate(LocalDate birthdate) {
-        this.birthdate = birthdate;
+    public void setBirthDate(String birthDate) {
+        this.birthDate = birthDate;
     }
 
-    public String getBirthplace() {
-        return birthplace;
+    public String getBirthPlace() {
+        return birthPlace;
     }
 
-    public void setBirthplace(String birthplace) {
-        this.birthplace = birthplace;
+    public void setBirthPlace(String birthPlace) {
+        this.birthPlace = birthPlace;
     }
 
     public String getCity() {
@@ -167,69 +224,5 @@ public class Agent {
 
     public void setSalary(double salary) {
         this.salary = salary;
-    }
-
-    public List<GradeHistory> getGradeHistory() {
-        return gradeHistory;
-    }
-
-    public void setGradeHistory(List<GradeHistory> gradeHistory) {
-        this.gradeHistory = gradeHistory;
-    }
-
-    public List<AffectationHistory> getAffectationHistories() {
-        return affectationHistories;
-    }
-
-    public void setAffectationHistories(List<AffectationHistory> affectationHistories) {
-        this.affectationHistories = affectationHistories;
-    }
-
-    public List<Diplome> getDiplomes() {
-        return diplomes;
-    }
-
-    public void setDiplomes(List<Diplome> diplomes) {
-        this.diplomes = diplomes;
-    }
-
-    public List<Conge> getConges() {
-        return conges;
-    }
-
-    public void setConges(List<Conge> conges) {
-        this.conges = conges;
-    }
-
-    public Poste getPoste() {
-        return poste;
-    }
-
-    public void setPoste(Poste poste) {
-        this.poste = poste;
-    }
-
-    public DecisionRecrutement getDecision() {
-        return decision;
-    }
-
-    public void setDecision(DecisionRecrutement decision) {
-        this.decision = decision;
-    }
-
-    public AvisPriseFonction getAvisPriseFonction() {
-        return avisPriseFonction;
-    }
-
-    public void setAvisPriseFonction(AvisPriseFonction avisPriseFonction) {
-        this.avisPriseFonction = avisPriseFonction;
-    }
-
-    public Grade getGrade() {
-        return grade;
-    }
-
-    public void setGrade(Grade grade) {
-        this.grade = grade;
     }
 }
