@@ -2,14 +2,18 @@ package com.mstrsi.pers_management.mappers;
 
 import com.mstrsi.pers_management.dtos.AgentDto;
 import com.mstrsi.pers_management.entities.Agent;
+import com.mstrsi.pers_management.entities.Role;
+import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;
 
+@Component
 public class AgentMapper {
 
     public static Agent mapAgentDtoToAgent(AgentDto agentDto) {
         Agent agent = new Agent(
                 agentDto.getId(),
+                agentDto.getUsername(),
                 agentDto.getFirstName(),
                 agentDto.getLastName(),
                 agentDto.getAddress(),
@@ -21,7 +25,9 @@ public class AgentMapper {
                 agentDto.getCity(),
                 agentDto.getCountry(),
                 agentDto.getJoinDate(),
-                agentDto.getSalary()
+                agentDto.getSalary(),
+                agentDto.getMatricule(),
+                agentDto.getPassword()
         );
 
         if (agentDto.getDiplomes() != null) {
@@ -73,6 +79,7 @@ public class AgentMapper {
 
         AgentDto agentDto = new AgentDto(
                 agent.getId(),
+                agent.getUsername(),
                 agent.getFirstName(),
                 agent.getLastName(),
                 agent.getAddress(),
@@ -131,4 +138,20 @@ public class AgentMapper {
         }
         return agentDto;
     }
+
+    public static Agent mapAgentDtoToAgentWithAuth(AgentDto agentDto , String matricule , String password , Role role) {
+        Agent agent = mapAgentDtoToAgent(agentDto);
+        agent.setMatricule(matricule);
+        agent.setPassword(password);
+        agent.setRole(role);
+        return agent;
+    }
+
+    public static AgentDto mapAgentToAgentDtoWithAuth(Agent agent) {
+        AgentDto agentDto = mapAgentToAgentDTO(agent);
+        agentDto.setMatricule(agent.getMatricule());
+        agentDto.setRole(Role.valueOf(agent.getRole().name()));
+        return agentDto;
+    }
+
 }

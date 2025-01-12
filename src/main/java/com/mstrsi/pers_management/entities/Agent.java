@@ -2,32 +2,61 @@ package com.mstrsi.pers_management.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
+@Builder
 @Entity
 @Table(name = "agents")
-public class Agent {
+public class Agent implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id ;
-    private String firstName ;
-    private String lastName ;
-    private String address ;
-    private String email ;
-    private String phone ;
-    private String gender ;
-    private String birthDate ;
-    private String birthPlace ;
-    private String city ;
-    private String country ;
-    private LocalDate joinDate ;
-    private double salary ;
+    private Long id;
+    private String username;
+    private String firstName;
+    private String lastName;
+    private String address;
 
-    public Agent() {
-    }
+    @NotBlank
+    @Size(max = 50)
+    @Email
+    private String email;
+    private String phone;
+    private String gender;
+    private String birthDate;
+    private String birthPlace;
+    private String city;
+    private String country;
+    private LocalDate joinDate;
+    private double salary;
+
+    @Column(unique = true)
+    private String matricule;
+
+    @NotBlank
+    @Size(max = 120)
+    private String password;
+
+    private boolean isActive = true;
+
+    @OneToOne
+    @JoinColumn(name = "decision_id")
+    private DecisionRecrutement decisionRecrutement;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     @JsonIgnore
     @OneToMany(mappedBy = "agent", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Diplome> diplomes = new ArrayList<>();
@@ -52,14 +81,37 @@ public class Agent {
     @OneToMany(mappedBy = "agent", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Affectation> affectations = new ArrayList<>();
 
-    private String decisionRecrutement;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
+    }
 
 
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
 
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
 
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
 
-    public Agent(Long id, String firstName, String lastName, String address, String email, String phone, String gender, String birthDate, String birthPlace, String city, String country, LocalDate joinDate, double salary) {
+    @Override
+    public boolean isEnabled() {
+        return isActive;
+    }
+    public Agent() {
+    }
+
+    public Agent(Long id, String username, String firstName, String lastName, String address, String email, String phone, String gender, String birthDate, String birthPlace, String city, String country, LocalDate joinDate, double salary, String matricule, String password) {
         this.id = id;
+        this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -72,7 +124,10 @@ public class Agent {
         this.country = country;
         this.joinDate = joinDate;
         this.salary = salary;
+        this.matricule = matricule;
+        this.password = password;
     }
+
 
     public List<Affectation> getAffectations() {
         return affectations;
@@ -224,5 +279,54 @@ public class Agent {
 
     public void setSalary(double salary) {
         this.salary = salary;
+    }
+
+    public String getMatricule() {
+        return matricule;
+    }
+
+    public void setMatricule(String matricule) {
+        this.matricule = matricule;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public DecisionRecrutement getDecisionRecrutement() {
+        return decisionRecrutement;
+    }
+
+    public void setDecisionRecrutement(DecisionRecrutement decisionRecrutement) {
+        this.decisionRecrutement = decisionRecrutement;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

@@ -37,6 +37,9 @@ public class DecisionRecrutement {
     @Enumerated(EnumType.STRING)
     private Visa visa;
 
+    @Enumerated(EnumType.STRING)
+    private DecisionStatus status;
+
     public long getDecision_id() {
         return decisionId;
     }
@@ -91,5 +94,17 @@ public class DecisionRecrutement {
 
     public void setVisa(Visa visa) {
         this.visa = visa;
+    }
+
+    public long getDecisionId() {
+        return decisionId;
+    }
+
+    public DecisionStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(DecisionStatus status) {
+        this.status = status;
     }
 }

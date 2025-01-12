@@ -2,8 +2,12 @@ package com.mstrsi.pers_management.services;
 
 import com.mstrsi.pers_management.dtos.*;
 import com.mstrsi.pers_management.entities.*;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 
+@Service
 public interface AgentService {
 
     AgentDto createAgent(AgentDto agentDto);
@@ -43,4 +47,9 @@ public interface AgentService {
     AgentDto removeAffectationFromAgent(Long agentId, Long affectationId);
     AgentDto updateAgentAffectation(Long agentId, Long affectationId, AffectationDto affectationDto);
     List<Affectation> getAffectationsByAgent(Long agentId);
+
+    /*UserDetails loadUserByUsername(String username);
+    void registerAgent(RegistrationRequest request);
+  */
+
 }

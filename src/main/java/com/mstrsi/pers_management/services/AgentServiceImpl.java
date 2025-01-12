@@ -5,35 +5,62 @@ import com.mstrsi.pers_management.entities.*;
 import com.mstrsi.pers_management.mappers.*;
 import com.mstrsi.pers_management.repositories.*;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class AgentServiceImpl implements AgentService {
-    private final GradeRepository gradeRepository;
-    private final CongeRepository congeRepository;
-    private final QualificationRepository qualificationRepository;
-    private final PosteRepository posteRepository;
-    private final AffectationRepository affectationRepository;
+
+    private GradeRepository gradeRepository;
+    private CongeRepository congeRepository;
+    private QualificationRepository qualificationRepository;
+    private PosteRepository posteRepository;
+    private AffectationRepository affectationRepository;
+
     private AgentRepository agentRepository;
     private DiplomeRepository diplomeRepository;
 
-    // Constructor to inject dependencies
-    public AgentServiceImpl(AgentRepository agentRepository, DiplomeRepository diplomeRepository, GradeRepository gradeRepository, CongeRepository congeRepository, QualificationRepository qualificationRepository, PosteRepository posteRepository, AffectationRepository affectationRepository) {
-        this.agentRepository = agentRepository;
-        this.diplomeRepository = diplomeRepository;
+    private IdentificationService identificationService;
+    private PasswordEncoder passwordEncoder;
+
+
+    public AgentServiceImpl(GradeRepository gradeRepository, CongeRepository congeRepository, QualificationRepository qualificationRepository, PosteRepository posteRepository, AffectationRepository affectationRepository, AgentRepository agentRepository, DiplomeRepository diplomeRepository, IdentificationService identificationService) {
         this.gradeRepository = gradeRepository;
         this.congeRepository = congeRepository;
         this.qualificationRepository = qualificationRepository;
         this.posteRepository = posteRepository;
         this.affectationRepository = affectationRepository;
+        this.agentRepository = agentRepository;
+        this.diplomeRepository = diplomeRepository;
+        this.identificationService = identificationService;
     }
+
+
+    /*@Override
+    public AgentDto createAgent(AgentDto agentDto) {
+        Agent agent = AgentMapper.mapAgentDtoToAgent(agentDto);
+        Agent savedAgent = agentRepository.save(agent);
+        return AgentMapper.mapAgentToAgentDTO(savedAgent);
+    }*/
 
     @Override
     public AgentDto createAgent(AgentDto agentDto) {
         Agent agent = AgentMapper.mapAgentDtoToAgent(agentDto);
+
+        // Si vous devez encoder un mot de passe
+        if (agent.getPassword() != null) {
+            agent.setPassword(passwordEncoder.encode(agent.getPassword()));
+        }
+
         Agent savedAgent = agentRepository.save(agent);
         return AgentMapper.mapAgentToAgentDTO(savedAgent);
     }
@@ -464,6 +491,45 @@ public class AgentServiceImpl implements AgentService {
                         -> new RuntimeException("Agent not found with id: " + agentId));
         return agent.getAffectations();
     }
+
+
+    /*@Override
+    public void registerAgent(RegistrationRequest request) {
+        if (agentRepository.existsByEmail(request.getEmail())) {
+            throw new RuntimeException("Ce email d'utilisateur est deja pris !");
+        }
+
+        Agent agent = new Agent();
+        agent.setEmail(request.getEmail());
+        agent.setPassword(request.getPassword());
+        agent.setFirstName(request.getUsername());
+        agent.setRole(request.getRole());
+
+        agentRepository.save(agent);
+    }
+
+
+    @Override
+    public UserDetails loadUserByUsername(String username) {
+        Agent agent = agentRepository.findByEmail(username)
+                .orElseThrow(() -> new RuntimeException(
+                        "Agent non trouvé avec l'email : " + username));
+
+        List<SimpleGrantedAuthority> authorities = Collections.singletonList(
+                new SimpleGrantedAuthority("ROLE_" + agent.getRole().name())
+        );
+
+        return org.springframework.security.core.userdetails.User
+                .builder()
+                .username(agent.getEmail())
+                .password(agent.getPassword())
+                .authorities(authorities)
+                .accountExpired(!agent.isActive())
+                .accountLocked(!agent.isActive())
+                .credentialsExpired(!agent.isActive())
+                .disabled(!agent.isActive())
+                .build();
+    }*/
 
 
 }

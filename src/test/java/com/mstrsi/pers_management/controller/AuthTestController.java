@@ -1,10 +1,8 @@
-package com.mstrsi.pers_management.controllers;
+package com.mstrsi.pers_management.controller;
 
 import com.mstrsi.pers_management.dtos.AgentDto;
-import com.mstrsi.pers_management.entities.Role;
 import com.mstrsi.pers_management.services.AgentService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +19,7 @@ public class AuthTestController {
     @PostMapping("/register")
     public ResponseEntity<Map<String , String>> registerAgent(@RequestBody AgentDto agentDto) {
         try {
-            AgentDto createdAgent = agentService.createAgent(agentDto , Role.AGENT);
+            AgentDto createdAgent = agentService.createAgent(agentDto);
             return ResponseEntity.ok(Map.of("message", "Agent created" , "matricule" , createdAgent.getMatricule()));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(Map.of("erreur", e.getMessage()));

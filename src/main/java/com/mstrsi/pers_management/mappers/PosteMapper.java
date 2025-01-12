@@ -3,6 +3,7 @@ package com.mstrsi.pers_management.mappers;
 import com.mstrsi.pers_management.dtos.PosteDto;
 import com.mstrsi.pers_management.entities.Poste;
 
+
 public class PosteMapper {
     public static Poste mapPosteDtoToPoste(PosteDto posteDto) {
         Poste poste = new Poste(
@@ -28,4 +29,6 @@ public class PosteMapper {
         }
         return posteDto;
     }
+
+
 }

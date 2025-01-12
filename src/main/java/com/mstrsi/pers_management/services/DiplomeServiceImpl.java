@@ -3,7 +3,7 @@ package com.mstrsi.pers_management.services;
 import com.mstrsi.pers_management.dtos.DiplomeDto;
 import com.mstrsi.pers_management.entities.Diplome;
 import com.mstrsi.pers_management.mappers.DiplomeMapper;
-import com.mstrsi.pers_management.repositories.DiplomeRepository;;
+import com.mstrsi.pers_management.repositories.DiplomeRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

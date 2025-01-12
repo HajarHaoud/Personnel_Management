@@ -1,5 +1,10 @@
 package com.mstrsi.pers_management.dtos;
 
+import com.mstrsi.pers_management.entities.Role;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -8,6 +13,7 @@ import java.util.List;
 
 public class AgentDto {
     private Long id;
+    private String username ;
     private String firstName;
     private String lastName;
     private String address;
@@ -20,6 +26,10 @@ public class AgentDto {
     private String country ;
     private LocalDate joinDate ;
     private double salary ;
+    private String matricule;
+    private String password;
+    private String decisionRecrutement;
+    private Role role;
     private List<DiplomeDto> diplomes;
     private List<GradeDto> grades;
     private List<CongeDto> conges;
@@ -29,8 +39,9 @@ public class AgentDto {
 
     public AgentDto() {}
 
-    public AgentDto(Long id, String firstName, String lastName, String address, String email, String phone, String gender, String birthDate, String birthPlace, String city, String country, LocalDate joinDate, double salary) {
+    public AgentDto(Long id, String username , String firstName, String lastName, String address, String email, String phone, String gender, String birthDate, String birthPlace, String city, String country, LocalDate joinDate, double salary) {
         this.id = id;
+        this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -195,5 +206,45 @@ public class AgentDto {
 
     public void setAffectations(List<AffectationDto> affectations) {
         this.affectations = affectations;
+    }
+
+    public String getMatricule() {
+        return matricule;
+    }
+
+    public void setMatricule(String matricule) {
+        this.matricule = matricule;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getDecisionRecrutement() {
+        return decisionRecrutement;
+    }
+
+    public void setDecisionRecrutement(String decisionRecrutement) {
+        this.decisionRecrutement = decisionRecrutement;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

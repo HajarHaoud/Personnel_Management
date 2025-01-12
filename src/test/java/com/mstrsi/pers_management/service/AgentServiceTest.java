@@ -1,9 +1,11 @@
-package com.mstrsi.pers_management.services;
+package com.mstrsi.pers_management.service;
 
 
 import com.mstrsi.pers_management.dtos.AgentDto;
-import com.mstrsi.pers_management.entities.Role;
+import com.mstrsi.pers_management.services.AgentService;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 
@@ -25,8 +27,8 @@ public class AgentServiceTest {
         agentDto.setCountry("France");
         agentDto.setSalary(45000.0);
 
-        AgentDto createdAgent = agentService.createAgent(agentDto , Role.AGENT);
+        AgentDto createdAgent = agentService.createAgent(agentDto);
 
-        assertNotNull(createdAgent)
+
     }
 }

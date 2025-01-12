@@ -14,7 +14,8 @@ public class Poste {
     private String posteName ;
     private String posteDescription ;
     private int posteSalary ;
-
+    private boolean posteStatus ;
+    private boolean isActive;
 
     @JsonIgnore
     @ManyToOne
@@ -35,6 +36,22 @@ public class Poste {
         this.posteName = posteName;
         this.posteDescription = posteDescription;
         this.posteSalary = posteSalary;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public boolean isPosteStatus() {
+        return posteStatus;
+    }
+
+    public void setPosteStatus(boolean posteStatus) {
+        this.posteStatus = posteStatus;
     }
 
     public UniteAffectation getUniteAffectation() {
